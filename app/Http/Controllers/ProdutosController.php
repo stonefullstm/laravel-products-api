@@ -35,7 +35,12 @@ class ProdutosController extends Controller
 
     }
 
-    public function delete(Produto $produto) {
-        $produto->delete();
+    public function destroy($id) {
+        $produto = Produto::findOrFail($id);
+        if ($produto->delete()) {
+            return response()->json([
+                'message'=>'Product successfully deleted'
+            ]);
+        }
     }
 }
