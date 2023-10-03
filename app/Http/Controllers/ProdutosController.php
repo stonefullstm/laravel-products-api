@@ -24,12 +24,18 @@ class ProdutosController extends Controller
         return $produto;
     }
 
-    public function update(Request $request, Produto $produto) {
+    public function update(Request $request, $id) {
+        $produto = Produto::findOrFail($id);
         $produto->nome = $request->input('nome');
         $produto->preco = $request->input('preco');
 
-        $produto->save();
+        if ($produto->save()) {
+            return $produto;
+        }
 
-        return $produto;
+    }
+
+    public function delete(Produto $produto) {
+        $produto->delete();
     }
 }
